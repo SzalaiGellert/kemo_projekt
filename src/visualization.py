@@ -12,17 +12,13 @@ def generate_and_show_3d(smiles_code: str, filename: str = "molecule.pdb"):
         print("Hiba: Érvénytelen SMILES kód!")
         return
 
-    # 3D koordináták generálása
     mol = Chem.AddHs(mol)
     AllChem.EmbedMolecule(mol, AllChem.ETKDG())
     AllChem.MMFFOptimizeMolecule(mol)
     
-    # Mentés PDB fájlba
     Chem.MolToPDBFile(mol, filename)
     print(f"2. 3D modell generálva: {filename}")
 
-    # --- AUTOMATIKUS 3D MEGJELENÍTÉS ---
-    # Létrehozunk egy apró interaktív 3D nézegető fájlt
     html_content = f"""
     <!DOCTYPE html>
     <html>
@@ -47,7 +43,6 @@ def generate_and_show_3d(smiles_code: str, filename: str = "molecule.pdb"):
     with open(view_file, "w") as f:
         f.write(html_content)
         
-    # Azonnal megnyitja a rendszer saját ablakában!
     webbrowser.open('file://' + os.path.realpath(view_file))
     print("3. A 3D ablak automatikusan megnyílt a képernyőn!\n")
 
