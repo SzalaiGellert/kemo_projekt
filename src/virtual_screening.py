@@ -4,7 +4,6 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from sklearn.ensemble import RandomForestRegressor
 
-# 1. MOLEKULA-ADATBÁZIS (Ezt a "könyvtárat" fogjuk átfuttatni a szűrőn)
 compound_library = [
     {'name': 'Ecetsav', 'smiles': 'CC(=O)O'},
     {'name': 'Benzol', 'smiles': 'C1=CC=CC=C1'},
@@ -15,7 +14,6 @@ compound_library = [
     {'name': 'Ibuprofén', 'smiles': 'CC(C)CC1=CC=C(C=C1)C(C)C(=O)O'}
 ]
 
-# Betanító adatsor a QSAR modellhez
 train_data = {
     'smiles': [
         'CC(=O)OC1=CC=CC=C1C(=O)O', 'CN1C=NC2=C1C(=O)N(C(=O)N2C)C',
@@ -53,7 +51,6 @@ def run_virtual_screening(min_solubility: float = -2.5):
         if fp is not None:
             pred_sol = model.predict(fp.reshape(1, -1))[0]
             
-            # Elfogadási kritérium ellenőrzése
             passed = pred_sol >= min_solubility
             
             results.append({
@@ -66,7 +63,6 @@ def run_virtual_screening(min_solubility: float = -2.5):
     results_df = pd.DataFrame(results)
     print(results_df.to_string(index=False))
 
-    # Elfogadott molekulák kimentése
     passed_compounds = results_df[results_df['Státusz'] == 'ELFOGADVA']
     print(f"\n--- 3. Eredmény ---")
     print(f"Összes szűrt molekula: {len(compound_library)}")
