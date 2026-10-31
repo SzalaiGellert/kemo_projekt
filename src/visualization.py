@@ -47,5 +47,4 @@ def generate_and_show_3d(smiles_code: str, filename: str = "molecule.pdb"):
     print("3. A 3D ablak automatikusan megnyílt a képernyőn!\n")
 
 if __name__ == "__main__":
-    # Futtasd le ezt:
     generate_and_show_3d("CC(=O)OC1=CC=CC=C1C(=O)O") # Aszpirin
