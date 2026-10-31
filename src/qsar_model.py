@@ -6,8 +6,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error
 
-# 1. KÉMIAI ADATSOR LÉTREHOZÁSA (Minta adatsor oldékonyságra - logS)
-# A logS a vízoldékonyságot jelöli (minél kisebb/negatívabb, annál rosszabbul oldódik)
+# 1. KÉMIAI ADATSOR LÉTREHOZÁSA
 data = {
     'smiles': [
         'CC(=O)OC1=CC=CC=C1C(=O)O',  # Aszpirin
@@ -18,7 +17,7 @@ data = {
         'CCCCCC',                    # Hexán
         'C1=CC=CC=C1'                # Benzol
     ],
-    'solubility': [-2.24, -1.18, -3.32, -0.82, 0.5, -3.9, -2.1] # logS értékek
+    'solubility': [-2.24, -1.18, -3.32, -0.82, 0.5, -3.9, -2.1]
 }
 
 def smiles_to_fingerprint(smiles: str, n_bits: int = 2048):
@@ -26,7 +25,6 @@ def smiles_to_fingerprint(smiles: str, n_bits: int = 2048):
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         return None
-    # Morgan Fingerprint generálása (radius=2 a standard választás)
     fp = AllChem.GetMorganFingerprintAsBitVect(mol, radius=2, nBits=n_bits)
     return np.array(fp)
 
